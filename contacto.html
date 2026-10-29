@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="logo">DR3X</a>
+        <button class="hamburguesa" id="btnMenu" type="button" aria-label="Abrir menú">
+            <span></span><span></span><span></span>
+        </button>
+        <nav class="menu" id="menu">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="servicios.html">Servicios</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+    </nav>
+</header>
+ <script src="js/main.js"></script>
+<main>
+    <section class="contacto">
+        <h1>Contacto</h1>
+        <p>Escríbanos y le responderemos lo antes posible.</p>
+
+        <form action="enviar.php" method="post" class="formulario">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" required>
+
+            <label for="correo">Correo</label>
+            <input type="email" id="correo" name="correo" required>
+
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+
+    <section class="ubicacion">
+        <h2>Visítenos</h2>
+        <img src="img/tienda.jpg" alt="Tienda DR3X" width="400">
+        <p>Dirección: Calle Principal 10-20, Centro. Horario: lunes a sábado de 9:00 a 18:00.</p>
+    </section>
+</main>
+<footer class="footer">
+    <div>
+        <p><strong>DR3X</strong></p>
+        <p>Teléfono: 1111-0000 · Correo: info@DR3X.com</p>
+    </div>
+    <ul class="redes">
+        <li><a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li>
+    </ul>
+    <p>Sitio web creado por Darien Parra.</p>
+    <p>&copy; 2026 DR3X</p>
+</footer>
+
+</body>
+</html>
+

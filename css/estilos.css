@@ -124,6 +124,9 @@ h2::after,
   transition: transform .2s, opacity .2s;   /* para animarlas en la clase 4 */
 }
 .hamburguesa:focus-visible { outline: 2px solid var(--color-acento); }
+.hamburguesa.activo span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.hamburguesa.activo span:nth-child(2) { opacity: 0; }
+.hamburguesa.activo span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
 
 /* ---------- 4. PORTADA, BOTÓN Y FOOTER ---------- */
@@ -274,14 +277,22 @@ h2::after,
 }
 .formulario button:hover { background: var(--color-acento); }
 
-
 /* =========================================================
    MEDIA QUERIES · mobile first (min-width = "desde este ancho hacia arriba")
    ========================================================= */
 
 /* base: celular */
-.menu { display: none; }              /* en el celular lo abrirá la hamburguesa */
+.menu { display: none; 
+width: 100%;
+}           
+/* en el celular lo abrirá la hamburguesa */
 .menu.abierto { display: block; flex-basis: 100%; }   /* la clase 4 pone/quita "abierto" con JavaScript */
+
+
+.menu.abierto ¨{ display: block;  }
+.menu.abierto ul {flex-direction: column; gap: 0; padding-top: 1rem;}
+/* la clase 4 pone/quita "abierto" con JavaScript */
+
 
 @media (min-width: 501px) {
   .portada h1 { font-size: 2.1rem; }
@@ -304,10 +315,12 @@ h2::after,
 }
 
 @media (min-width: 991px) {
-  .menu { display: block; flex-basis: auto; }      /* menú normal en pantalla grande */
+  .menu { display: block; flex-basis: auto; width: auto; }      /* menú normal en pantalla grande */
   .menu ul { flex-direction: row; gap: 1.5rem; margin: 0; }
   .hamburguesa { display: none; }
+  .menu.abierto ul{ flex-direction: row; gap: 1 rem; padding-top: 0; }   /* la clase 4 pone/quita "abierto" con JavaScript */
 
   .tarjeta { width: calc(33.333% - .67rem); }      /* tres por fila */
   .portada h1 { font-size: 2.6rem; }
 }
+

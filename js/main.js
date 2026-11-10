@@ -55,7 +55,7 @@ const prendas = [
     { titulo: "Vestido punk",           descripcion: "Falda asimétrica de tartán, malla y cadenas para destacar de noche.", precio: 34900, img: "img/Vestidopunk.jpg",     alt: "Vestido punk negro con falda de cuadros rojos y cadenas" },
     { titulo: "Playera desgastada",     descripcion: "Oversize con acabado envejecido y detalles rasgados.",                precio: 18900, img: "img/Camisapunk.jpg",      alt: "Playera negra oversize con efecto desgastado y rasgaduras" },
     { titulo: "Pantalón punk",          descripcion: "Pantalón negro con correas, hebillas y parches.",                     precio: 29900, img: "img/Pantalonpunk.jpg",    alt: "Pantalón negro rasgado con correas y hebillas" },
-    { titulo: "Chaqueta negra",         descripcion: "Estilo cuero, ideal para los días frescos.",                          precio: 42500, img: "img/chaqueta.jpg",        alt: "Chaqueta negra estilo cuero con cierre" },
+    { titulo: "Chaqueta negra",         descripcion: "Estilo cuero, ideal para los días frescos.",                          precio: 30000, img: "img/chaqueta.jpg",        alt: "Chaqueta negra estilo cuero con cierre" },
     { titulo: "Falda plisada",          descripcion: "Plisada con herrajes y correa lateral.",                              precio: 16500, img: "img/falda.jpg",           alt: "Falda plisada negra con correa y botones metálicos" },
     { titulo: "Pantalón cargo",         descripcion: "Holgado, con bolsillos laterales y mucho espacio.",                   precio: 24900, img: "img/pantalon-hombre.jpg", alt: "Pantalón cargo negro holgado con bolsillos laterales" }
 ];
@@ -65,7 +65,7 @@ const servicios = [
     { titulo: "Lavandería",             descripcion: "Lavado y secado de sus prendas, con cuidado según la etiqueta.",      precio: 8000,  img: "img/lavanderia.jpg",      alt: "Ícono de una lavadora" },
     { titulo: "Planchado",              descripcion: "Prendas listas para usar, sin arrugas y dobladas.",                   precio: 3000,  img: "img/planchado.jpg",       alt: "Ícono de una plancha con vapor" },
     { titulo: "Tintorería",             descripcion: "Limpieza en seco para abrigos, chaquetas y telas delicadas.",         precio: 10000, img: "img/tintoreria.jpg",      alt: "Ícono de una camisa colgada en un gancho" },
-    { titulo: "Asesoría de imagen",     descripcion: "Una sesión para combinar prendas y colores según su estilo.",         precio: 25000, img: "img/asesoria.jpg",        alt: "Ícono de un maniquí con cinta métrica" },
+    { titulo: "Servicio express",       descripcion: "Contamos con un servicio express para su comodidad (limitado al GAM).",precio: 3000, img: "img/Express.png",        alt: "Ícono de servicio express" },
     { titulo: "Arreglos y ajustes",     descripcion: "Ruedos, botones, cierres y ajustes a su medida.",                     precio: 6000,  img: "img/arreglos.jpg",        alt: "Ícono de un botón con hilo y aguja" },
     { titulo: "Personalización punk",   descripcion: "Parches, tachas y estampados para hacer su prenda única.",            precio: 12000, img: "img/personalizacion.jpg", alt: "Ícono de un imperdible con tachas" }
 ];

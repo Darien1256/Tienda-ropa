@@ -1,86 +1,17 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DR3X | Tienda de ropa</title>
-    <link rel="stylesheet" href="css/estilos.css">
-</head>
-<body>
-    <header class="header">
-        <a href="index.html" class="logo">DR3X</a>
-
-        <button class="hamburguesa" id="btnMenu" type="button" aria-label="Abrir menú">
-            <span></span><span></span><span></span>
-        </button>
-
-        <nav class="menu" id="menu">
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="nosotros.html">Nosotros</a></li>
-                <li><a href="servicios.html">Servicios</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
+<?php $titulo = "DR3X | Tienda de ropa"; include "header.php"; ?>
 
     <main>
         <section class="portada">
-            <h1>Vistete fuera de la norma</h1>
+            <h1>Vístete fuera de la norma</h1>
             <p>Encuentre las últimas tendencias en moda para dama y caballero, con atención personalizada.</p>
-            <a href="contacto.html" class="boton">Escríbanos</a>
-        </section>
-
-        <section class="servicios contenedor">
-            <h2>Servicios</h2>
-            <div class="cards">
-                <article class="tarjeta">
-                    <img src="img/blusa.jpg" alt="Blusa blanca con botones para dama">
-                    <h3>Blusas y camisas</h3>
-                    <p>Cortes modernos en telas cómodas, para la oficina o para salir.</p>
-                    <a href="servicios.html" class="boton">Ver más</a>
-                </article>
-                <article class="tarjeta">
-                    <img src="img/vestido.jpg" alt="Vestido rojo sin mangas">
-                    <h3>Vestidos y faldas</h3>
-                    <p>Largos y cortos para cada ocasión, en tallas del S al XL.</p>
-                    <a href="servicios.html" class="boton">Ver más</a>
-                </article>
-                <article class="tarjeta">
-                    <img src="img/pantalon-hombre.jpg" alt="Pantalón de mezclilla azul">
-                    <h3>Pantalones y jeans</h3>
-                    <p>Mezclilla y telas ligeras con ajuste cómodo, para dama y caballero.</p>
-                    <a href="servicios.html" class="boton">Ver más</a>
-                </article>
-                <article class="tarjeta">
-                    <img src="img/camisa-hombre.jpg" alt="Playera negra de manga corta">
-                    <h3>Playeras para caballero</h3>
-                    <p>Básicos de calidad y estampados que combinan con todo.</p>
-                    <a href="servicios.html" class="boton">Ver más</a>
-                </article>
-                <article class="tarjeta">
-                    <img src="img/chaqueta.jpg" alt="Chaqueta verde con cierre">
-                    <h3>Chaquetas y suéteres</h3>
-                    <p>Abrigo con estilo para los días frescos.</p>
-                    <a href="servicios.html" class="boton">Ver más</a>
-                </article>
-                <article class="tarjeta">
-                    <img src="img/asesoria-imagen.jpg" alt="Gancho de ropa sobre fondo amarillo">
-                    <h3>Asesoría de imagen</h3>
-                    <p>Te ayudamos a combinar prendas y colores para cada ocasión.</p>
-                    <a href="servicios.html" class="boton">Ver más</a>
-                </article>
-            </div>
+            <a href="contacto.php" class="boton">Escríbanos</a>
         </section>
 
         <section class="galeria contenedor">
             <h2>Galería</h2>
-            <p>Algunas de nuestras prendas más atrevidas!!.</p>
-            <div class="fotos">
-                <img src="img/Vestidopunk.jpg" alt="Vitrina de la tienda con ropa para dama">
-                <img src="img/Camisapunk.jpg" alt="Perchero con camisas y chaquetas para caballero">
-                <img src="img/Pantalonpunk.jpg" alt="Estante con jeans doblados por talla">
-            </div>
+            <p>Algunas de nuestras prendas, con su respectivo valor.</p>
+            <!-- Estas tarjetas las dibuja JavaScript desde el arreglo "prendas" de js/main.js -->
+            <div class="cards cards-prendas" id="galeria"></div>
         </section>
 
         <section class="preguntas contenedor">
@@ -106,19 +37,4 @@
         </section>
     </main>
 
-    <footer class="footer">
-        <div>
-            <p><strong>DR3X</strong></p>
-            <p>Teléfono: 2222-2222 · Correo: info@dr3x.com</p>
-        </div>
-        <ul class="redes">
-            <li><a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a></li>
-            <li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li>
-        </ul>
-        <p class="creditos">Sitio web creado por Darien Parra  · &copy; 2026 DR3X</p>
-    </footer>
-
-    <script src="js/main.js" defer></script>
-
-</body>
-</html>
+<?php include "footer.php"; ?>

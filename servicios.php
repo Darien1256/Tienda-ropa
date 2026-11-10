@@ -1,33 +1,15 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servicios | DR3X</title>
-    <link rel="stylesheet" href="css/estilos.css">
-</head>
-<body>
-    <header class="header">
-        <a href="index.html" class="logo">DR3X</a>
-
-        <button class="hamburguesa" id="btnMenu" type="button" aria-label="Abrir menú">
-            <span></span><span></span><span></span>
-        </button>
-
-        <nav class="menu" id="menu">
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="nosotros.html">Nosotros</a></li>
-                <li><a href="servicios.html">Servicios</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
+<?php $titulo = "Servicios | DR3X"; include "header.php"; ?>
 
     <main>
         <section class="intro contenedor">
             <h1>Servicios</h1>
-            <p>En DR3X le ofrecemos todo lo que necesita para renovar su guardarropa.</p>
+            <p>En DR3X le ofrecemos todo lo que necesita para renovar y cuidar su guardarropa: desde lavandería y tintorería hasta asesoría de imagen.</p>
+        </section>
+
+        <section class="cuidado contenedor">
+            <h2>Cuidado y asesoría</h2>
+            <!-- Estas tarjetas las dibuja JavaScript desde el arreglo "servicios" de js/main.js -->
+            <div class="cards cards-servicios" id="lista-servicios"></div>
         </section>
 
         <section class="dama contenedor">
@@ -51,12 +33,9 @@
         <section class="asesoria contenedor">
             <h2>Asesoría de imagen</h2>
             <p>Le ayudamos a combinar prendas y colores para cada ocasión: trabajo, fiesta o uso diario.</p>
+            <a href="contacto.php" class="boton">Agendar una asesoría</a>
             <img src="img/asesores.jpg" alt="Asesora de imagen mostrando combinaciones de ropa a una clienta">
         </section>
     </main>
 
-    <?php include "footer.php"; ?>
-
-    <script src="js/main.js" defer></script>
-</body>
-</html>
+<?php include "footer.php"; ?>

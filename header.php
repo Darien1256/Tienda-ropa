@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DR3X | Tienda de ropa</title>
+    <title><?php echo $titulo ?? "DR3X | Tienda de ropa"; ?></title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
     <header class="header">
-        <a href="index.html" class="logo">DR3X</a>
+        <a href="index.php" class="logo">DR3X</a>
 
-        <button class="hamburguesa" id="btnMenu" type="button" aria-label="Abrir menú">
+        <button class="hamburguesa" id="btnMenu" type="button" aria-label="Abrir menú" aria-expanded="false">
             <span></span><span></span><span></span>
         </button>
 

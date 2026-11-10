@@ -9,7 +9,7 @@
 
         <section class="galeria contenedor">
             <h2>Galería</h2>
-            <p>Algunas de nuestras prendas, con su respectivo valor.</p>
+            <p>Algunas de nuestras prendas.</p>
             <!-- Estas tarjetas las dibuja JavaScript desde el arreglo "prendas" de js/main.js -->
             <div class="cards cards-prendas" id="galeria"></div>
         </section>
@@ -19,15 +19,15 @@
             <div class="accordion">
                 <div class="item">
                     <button class="titulo" type="button">¿Puedo cambiar una prenda si la talla no es la correcta?</button>
-                    <div class="contenido"><p>Sí. Tienes 15 días con la etiqueta puesta y tu comprobante de compra.</p></div>
+                    <div class="contenido"><p>Sí. La prenda debe estar en buen estado y contar con el comprobante de compra.</p></div>
                 </div>
                 <div class="item">
                     <button class="titulo" type="button">¿Qué formas de pago aceptan?</button>
-                    <div class="contenido"><p>Efectivo, tarjeta de crédito, tarjeta de débito y transferencia bancaria.</p></div>
+                    <div class="contenido"><p>Efectivo, tarjeta de crédito y débito y transferencia sinpemovil.</p></div>
                 </div>
                 <div class="item">
                     <button class="titulo" type="button">¿Hacen envíos?</button>
-                    <div class="contenido"><p>Sí, enviamos a todo el país en 2 a 4 días hábiles.</p></div>
+                    <div class="contenido"><p>Sí, enviamos a todo el GAM en 1 a 2 días hábiles.</p></div>
                 </div>
                 <div class="item">
                     <button class="titulo" type="button">¿Cuál es el horario de atención?</button>

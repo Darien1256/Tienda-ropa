@@ -63,7 +63,7 @@ const prendas = [
 // Servicios (servicios.php)
 const servicios = [
     { titulo: "Lavandería",             descripcion: "Lavado y secado de sus prendas, con cuidado según la etiqueta.",      precio: 8000,  img: "img/lavanderia.jpg",      alt: "Ícono de una lavadora" },
-    { titulo: "Planchado",              descripcion: "Prendas listas para usar, sin arrugas y dobladas.",                   precio: 5000,  img: "img/planchado.jpg",       alt: "Ícono de una plancha con vapor" },
+    { titulo: "Planchado",              descripcion: "Prendas listas para usar, sin arrugas y dobladas.",                   precio: 3000,  img: "img/planchado.jpg",       alt: "Ícono de una plancha con vapor" },
     { titulo: "Tintorería",             descripcion: "Limpieza en seco para abrigos, chaquetas y telas delicadas.",         precio: 10000, img: "img/tintoreria.jpg",      alt: "Ícono de una camisa colgada en un gancho" },
     { titulo: "Asesoría de imagen",     descripcion: "Una sesión para combinar prendas y colores según su estilo.",         precio: 25000, img: "img/asesoria.jpg",        alt: "Ícono de un maniquí con cinta métrica" },
     { titulo: "Arreglos y ajustes",     descripcion: "Ruedos, botones, cierres y ajustes a su medida.",                     precio: 6000,  img: "img/arreglos.jpg",        alt: "Ícono de un botón con hilo y aguja" },

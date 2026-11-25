@@ -1,5 +1,9 @@
 <?php
 // La primera línea de este archivo DEBE ser <?php, sin espacios ni líneas en blanco antes.
+
+// >>> Cambie este correo por el SUYO cuando quiera probar que los mensajes llegan. <<<
+$destino = "info@dr3x.com";
+
 // Si alguien abre enviar.php escribiendo la dirección (sin llenar el formulario), lo devolvemos al formulario.
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: contacto.php");
@@ -18,13 +22,16 @@ if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) $errores[] = "Correo inválido.
 if ($mensaje === "") $errores[] = "El mensaje es obligatorio.";
 
 if (count($errores) === 0) {
+    // El nombre va en el asunto/cuerpo: quitamos saltos de línea para que nadie pueda "colar" encabezados falsos.
+    $nombreSeguro = str_replace(["\r", "\n"], " ", $nombre);
+
     // El @ evita que XAMPP muestre un aviso si no tiene servidor de correo configurado.
     // En localhost normalmente no envía el correo, pero igual te lleva a gracias.php.
     @mail(
-        "info@dr3x.com",
+        $destino,
         "Mensaje desde el sitio DR3X",
-        "Nombre: $nombre\nCorreo: $correo\n\n$mensaje",
-        "From: no-reply@dr3x.com"
+        "Nombre: $nombreSeguro\nCorreo: $correo\n\n$mensaje",
+        "From: no-reply@dr3x.com\r\nReply-To: $correo"   // Reply-To: al darle "responder" le contesta al cliente
     );
     header("Location: gracias.php");
     exit;

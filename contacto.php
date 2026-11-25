@@ -1,35 +1,12 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacto | DR3X</title>
-    <link rel="stylesheet" href="css/estilos.css">
-</head>
-<body>
-    <header class="header">
-        <a href="index.html" class="logo">DR3X</a>
-
-        <button class="hamburguesa" id="btnMenu" type="button" aria-label="Abrir menú">
-            <span></span><span></span><span></span>
-        </button>
-
-        <nav class="menu" id="menu">
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="nosotros.html">Nosotros</a></li>
-                <li><a href="servicios.html">Servicios</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
+<?php $titulo = "Contacto | DR3X"; include "header.php"; ?>
 
     <main>
         <section class="contacto contenedor">
             <h1>Contacto</h1>
             <p>Escríbanos y le responderemos lo antes posible.</p>
 
-            <form action="enviar.php" method="post" class="formulario">
+            <!-- novedad: id="formulario" (lo usa main.js) y novalidate (para que sea JavaScript quien muestre los errores) -->
+            <form action="enviar.php" method="post" class="formulario" id="formulario" novalidate>
                 <label for="nombre">Nombre</label>
                 <input type="text" id="nombre" name="nombre" required>
 
@@ -38,6 +15,9 @@
 
                 <label for="mensaje">Mensaje</label>
                 <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+
+                <!-- Aquí JavaScript escribe los errores -->
+                <p class="mensajes" id="mensajes" role="alert"></p>
 
                 <button type="submit">Enviar</button>
             </form>
@@ -50,8 +30,4 @@
         </section>
     </main>
 
-   <?php include "footer.php"; ?>
-
-    <script src="js/main.js" defer></script>
-</body>
-</html>
+<?php include "footer.php"; ?>

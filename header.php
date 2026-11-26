@@ -10,9 +10,8 @@
     <header class="header">
         <a href="index.php" class="logo">DR3X</a>
 
-        <!-- Carrito + hamburguesa juntos, a la derecha del logo -->
-        <div class="acciones">
-            <button class="btn-carrito" id="btnCarrito" type="button" aria-label="Abrir carrito" aria-expanded="false" aria-controls="carrito">
+        <div class="acciones"> <!--Menú hamburguesa y carrito juntos, a la derecha el logo-->
+            <button class="btn-carrito" id="btnCarrito" type="button" aria-label="Abrir carrito">
                 <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M6 7h12l1 13H5L6 7z"></path>
                     <path d="M9 7V6a3 3 0 0 1 6 0v1"></path>
@@ -21,7 +20,7 @@
                 <span class="contador-carrito vacio" id="contadorCarrito">0</span>
             </button>
 
-            <button class="hamburguesa" id="btnMenu" type="button" aria-label="Abrir menú" aria-expanded="false">
+            <button class="hamburguesa" id="btnMenu" type="button" aria-label="Abrir menú">
                 <span></span><span></span><span></span>
             </button>
         </div>

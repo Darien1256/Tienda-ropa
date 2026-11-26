@@ -1,130 +1,103 @@
-/* =========================================================
-   DR3X · main.js
-   Un solo archivo para las páginas. Cada bloque revisa primero si
-   lo que necesita existe en la página (por eso los "if"): así un
-   bloque nunca rompe a los demás.
-   ========================================================= */
-
-
-/* ---------- 1. MENÚ HAMBURGUESA ---------- */
+//Listas de menú
+//Hamburguesa
 const btnMenu = document.querySelector("#btnMenu");
 const menu = document.querySelector("#menu");
 
-if (btnMenu && menu) {
-    btnMenu.addEventListener("click", () => {
-        // toggle = si la clase está la quita, y si no está la pone
-        const abierto = menu.classList.toggle("abierto");   // muestra/oculta el menú
-        btnMenu.classList.toggle("activo", abierto);         // convierte las rayitas en X
-        btnMenu.setAttribute("aria-expanded", abierto);      // avisa a lectores de pantalla
-    });
+btnMenu.addEventListener("click", () => { //Agrega la x o rayillas en moviles
+    menu.classList.toggle("abierto");          
+    btnMenu.classList.toggle("activo");
+});
 
-    // Cerrar el menú al hacer clic en un enlace
-    document.querySelectorAll("#menu a").forEach((enlace) => {
-        enlace.addEventListener("click", () => {
-            menu.classList.remove("abierto");
-            btnMenu.classList.remove("activo");
-            btnMenu.setAttribute("aria-expanded", "false");
-        });
-    });
-}
-
-
-/* ---------- 2. ACCORDION (preguntas frecuentes) ---------- */
-// OJO: la clase es "accordion" (con dos c), igual que en el HTML y en el CSS.
-const titulos = document.querySelectorAll(".accordion .titulo");   // todos los botones, no solo el primero
-
-titulos.forEach((titulo) => {
-    titulo.addEventListener("click", () => {
-        const item = titulo.parentElement;                         // la caja .item de este botón
-
-        // Cerrar los demás para que solo haya uno abierto
-        document.querySelectorAll(".accordion .item").forEach((otro) => {
-            if (otro !== item) otro.classList.remove("activo");
-        });
-
-        item.classList.toggle("activo");                           // abrir o cerrar el que tocaste
+document.querySelectorAll("#menu a").forEach(enlace => { //Cerrar menú
+    enlace.addEventListener("click", () => {
+        menu.classList.remove("abierto");
+        btnMenu.classList.remove("activo");
     });
 });
 
+//Menú accordion (preguntas frecuentes)
+const titulos = document.querySelectorAll(".accordion .titulo");
 
-/* ---------- 3. CARDS GENERADAS DESDE UN ARREGLO ---------- */
-const MONEDA = "₡";      // si usas otra moneda, cámbiala solo aquí (por ejemplo "$")
+titulos.forEach(titulo => {
+    titulo.addEventListener("click", () => {
+        const item = titulo.parentElement; //Item
+        document.querySelectorAll(".accordion .item").forEach(otro => { //Cierra menú cuando otro se abre
+            if (otro !== item) otro.classList.remove("activo");
+        });
+        item.classList.toggle("activo");
+    });
+});
 
-// OFERTA DE BLACK FRIDAY: porcentaje de descuento de las prendas marcadas con  oferta: true  (más abajo).
-// Para quitar la oferta pon 0 y las tarjetas vuelven a mostrar el precio normal.
-// (Si cambias el 30, cambia también los textos "30%" de index.php.)
-const DESCUENTO = 30;
-
-// Escribe un número como dinero: dinero(34900) -> "₡34 900"
-function dinero(numero) {
+// Cards del index con su respectivo valor
+const MONEDA = "₡"; //colones xd
+const DESCUENTO = 30; //Descuento de prendas seleccionadas 
+function dinero(numero) { //Dinero
     return MONEDA + numero.toLocaleString("es-CR");
 }
-
-// Solo están en oferta las prendas marcadas con  oferta: true.  Las demás prendas y los servicios
-// conservan su precio normal. Para poner o quitar una prenda de la oferta, agrega o borra ese  oferta: true.
-function enOferta(item) {
+function enOferta(item) { //Prendas con valor true son las seleccionadas para la oferta
     return DESCUENTO > 0 && item.oferta === true;
 }
-
-// El precio que realmente se paga: el normal menos el descuento (redondeado a colones enteros).
-// El carrito (sección 6) usa esta misma función, así que los precios siempre coinciden.
-function precioFinal(item) {
-    if (!enOferta(item)) return item.precio;
-    return Math.round(item.precio * (100 - DESCUENTO) / 100);
+function precioFinal(item) { //Logica matematica, no sé como se diga 
+    if (enOferta(item)) {
+        return Math.round(item.precio * (100 - DESCUENTO) / 100);
+    }
+    return item.precio;
 }
-
-// Prendas de la galería (index.php). Para agregar una más, copia una línea y cambia sus datos.
-//   id     = nombre corto y ÚNICO (el carrito lo usa para reconocer la prenda)
-//   tipo   = qué clase de prenda es (se ve en la tarjeta y en el carrito)
-//   tallas = las tallas que se pueden elegir
+//Prendas, id, y sus decripciones y valores (para el darien del futuro, true, son las seleccionadas con descuento)
 const prendas = [
-    { id: "vestido-punk",      tipo: "Vestido",   titulo: "Vestido punk",       descripcion: "Falda asimétrica de tartán, malla y cadenas para destacar de noche.", precio: 34900, oferta: true, tallas: ["XS", "S", "M", "L"],       img: "img/Vestidopunk.jpg",     alt: "Vestido punk negro con falda de cuadros rojos y cadenas" },
-    { id: "playera-desgastada", tipo: "Playera",  titulo: "Playera desgastada", descripcion: "Oversize con acabado envejecido y detalles rasgados.",                precio: 18900, oferta: true, tallas: ["S", "M", "L", "XL"],       img: "img/Camisapunk.jpg",      alt: "Playera negra oversize con efecto desgastado y rasgaduras" },
-    { id: "pantalon-punk",     tipo: "Pantalón",  titulo: "Pantalón punk",      descripcion: "Pantalón negro con correas, hebillas y parches.",                     precio: 29900, oferta: true, tallas: ["28", "30", "32", "34"],    img: "img/Pantalonpunk.jpg",    alt: "Pantalón negro rasgado con correas y hebillas" },
-    { id: "chaqueta-negra",    tipo: "Chaqueta",  titulo: "Chaqueta negra",     descripcion: "Estilo cuero, ideal para los días frescos.",                          precio: 30000, tallas: ["S", "M", "L", "XL"],       img: "img/chaqueta.jpg",        alt: "Chaqueta negra estilo cuero con cierre" },
-    { id: "falda-plisada",     tipo: "Falda",     titulo: "Falda plisada",      descripcion: "Plisada con herrajes y correa lateral.",                              precio: 16500, tallas: ["XS", "S", "M", "L"],       img: "img/falda.jpg",           alt: "Falda plisada negra con correa y botones metálicos" },
-    { id: "pantalon-cargo",    tipo: "Pantalón",  titulo: "Pantalón cargo",     descripcion: "Holgado, con bolsillos laterales y mucho espacio.",                   precio: 24900, tallas: ["28", "30", "32", "34"],    img: "img/pantalon-hombre.jpg", alt: "Pantalón cargo negro holgado con bolsillos laterales" }
+    { id: "vestido-punk",       tipo: "Vestido",  titulo: "Vestido punk",       descripcion: "Falda asimétrica de tartán, malla y cadenas para destacar de noche.", precio: 34900, oferta: true, tallas: ["XS", "S", "M", "L"],    img: "img/Vestidopunk.jpg",     alt: "Vestido punk negro con falda de cuadros rojos y cadenas" },
+    { id: "playera-desgastada", tipo: "Playera",  titulo: "Playera desgastada", descripcion: "Oversize con acabado envejecido y detalles rasgados.",                precio: 18900, oferta: true, tallas: ["S", "M", "L", "XL"],    img: "img/Camisapunk.jpg",      alt: "Playera negra oversize con efecto desgastado y rasgaduras" },
+    { id: "pantalon-punk",      tipo: "Pantalón", titulo: "Pantalón punk",      descripcion: "Pantalón negro con correas, hebillas y parches.",                     precio: 29900, oferta: true, tallas: ["28", "30", "32", "34"], img: "img/Pantalonpunk.jpg",    alt: "Pantalón negro rasgado con correas y hebillas" },
+    { id: "chaqueta-negra",     tipo: "Chaqueta", titulo: "Chaqueta negra",     descripcion: "Estilo cuero, ideal para los días frescos.",                          precio: 30000, tallas: ["S", "M", "L", "XL"],                       img: "img/chaqueta.jpg",        alt: "Chaqueta negra estilo cuero con cierre" },
+    { id: "falda-plisada",      tipo: "Falda",    titulo: "Falda plisada",      descripcion: "Plisada con herrajes y correa lateral.",                              precio: 16500, tallas: ["XS", "S", "M", "L"],                       img: "img/falda.jpg",           alt: "Falda plisada negra con correa y botones metálicos" },
+    { id: "pantalon-cargo",     tipo: "Pantalón", titulo: "Pantalón cargo",     descripcion: "Holgado, con bolsillos laterales y mucho espacio.",                   precio: 24900, tallas: ["28", "30", "32", "34"],                    img: "img/pantalon-hombre.jpg", alt: "Pantalón cargo negro holgado con bolsillos laterales" }
 ];
 
-// Servicios (servicios.php)
+// Servicios y sus costos
 const servicios = [
-    { titulo: "Lavandería",             descripcion: "Lavado y secado de sus prendas, con cuidado según la etiqueta.",      precio: 8000,  img: "img/lavanderia.jpg",      alt: "Ícono de una lavadora" },
-    { titulo: "Planchado",              descripcion: "Prendas listas para usar, sin arrugas y dobladas.",                   precio: 3000,  img: "img/planchado.jpg",       alt: "Ícono de una plancha con vapor" },
-    { titulo: "Tintorería",             descripcion: "Limpieza en seco para abrigos, chaquetas y telas delicadas.",         precio: 10000, img: "img/tintoreria.jpg",      alt: "Ícono de una camisa colgada en un gancho" },
-    { titulo: "Servicio express",       descripcion: "Contamos con un servicio express para su comodidad (limitado al GAM).",precio: 3000, img: "img/Express.png",        alt: "Ícono de servicio express" },
-    { titulo: "Arreglos y ajustes",     descripcion: "Ruedos, botones, cierres y ajustes a su medida.",                     precio: 6000,  img: "img/arreglos.jpg",        alt: "Ícono de un botón con hilo y aguja" },
-    { titulo: "Personalización punk",   descripcion: "Parches, tachas y estampados para hacer su prenda única.",            precio: 12000, img: "img/personalizacion.jpg", alt: "Ícono de un imperdible con tachas" }
+    { titulo: "Lavandería",           descripcion: "Lavado y secado de sus prendas, con cuidado según la etiqueta.",       precio: 8000,  img: "img/lavanderia.jpg",      alt: "Ícono de una lavadora" },
+    { titulo: "Planchado",            descripcion: "Prendas listas para usar, sin arrugas y dobladas.",                    precio: 3000,  img: "img/planchado.jpg",       alt: "Ícono de una plancha con vapor" },
+    { titulo: "Tintorería",           descripcion: "Limpieza en seco para abrigos, chaquetas y telas delicadas.",          precio: 10000, img: "img/tintoreria.jpg",      alt: "Ícono de una camisa colgada en un gancho" },
+    { titulo: "Servicio express",     descripcion: "Contamos con un servicio express para su comodidad (limitado al GAM).", precio: 3000, img: "img/Express.png",         alt: "Ícono de servicio express" },
+    { titulo: "Arreglos y ajustes",   descripcion: "Ruedos, botones, cierres y ajustes a su medida.",                      precio: 6000,  img: "img/arreglos.jpg",        alt: "Ícono de un botón con hilo y aguja" },
+    { titulo: "Personalización punk", descripcion: "Parches, tachas y estampados para hacer su prenda única.",             precio: 12000, img: "img/personalizacion.jpg", alt: "Ícono de un imperdible con tachas" }
 ];
 
-// Dibuja una tarjeta por cada elemento de la lista dentro del contenedor indicado.
-// Si el elemento tiene "tallas" (las prendas) la tarjeta lleva el selector de talla y el botón del carrito;
-// si no (los servicios) lleva el botón "Consultar".
+// Dibuja una tarjeta por cada elemento de la lista dentro del contenedor.
+// Las prendas llevan el selector de talla y el botón del carrito;
+// los servicios llevan el botón "Consultar".
 function pintarCards(lista, contenedor) {
-    if (!contenedor) return;            // si esta página no tiene ese contenedor, no hace nada
-    contenedor.innerHTML = "";          // limpiar antes de pintar, para no duplicar tarjetas
-    lista.forEach((item) => {
+    contenedor.innerHTML = ""; // limpiar antes de dibujar, para no duplicar tarjetas
+    lista.forEach(item => {
         const art = document.createElement("article");
         art.classList.add("tarjeta");
 
-        const tipo = item.tipo ? `<p class="tipo">${item.tipo}</p>` : "";
+        // En oferta: etiqueta "-30%" en la esquina y, en el precio, el valor viejo tachado y el nuevo
+        let etiqueta = "";
+        let precio = dinero(item.precio);
+        if (enOferta(item)) {
+            etiqueta = `<span class="etiqueta-oferta">-${DESCUENTO}%</span>`;
+            precio = `<del class="precio-antes">${dinero(item.precio)}</del> ${dinero(precioFinal(item))}`;
+        }
 
-        // En oferta: etiqueta "-30%" en la esquina y, en el precio, el valor viejo tachado y el nuevo.
-        const etiqueta = enOferta(item) ? `<span class="etiqueta-oferta">-${DESCUENTO}%</span>` : "";
-        const precio = enOferta(item)
-            ? `<del class="precio-antes">${dinero(item.precio)}</del> ${dinero(precioFinal(item))}`
-            : dinero(item.precio);
+        let tipo = "";
+        if (item.tipo) {
+            tipo = `<p class="tipo">${item.tipo}</p>`;
+        }
 
         let compra = `<a href="contacto.php" class="boton">Consultar</a>`;
         if (item.tallas) {
-            const opciones = item.tallas.map((t) => `<option value="${t}">${t}</option>`).join("");
+            let opciones = "";
+            item.tallas.forEach(talla => {
+                opciones += `<option value="${talla}">${talla}</option>`;
+            });
             compra = `
                 <div class="compra">
                     <label class="talla">Talla
                         <select class="talla-select">${opciones}</select>
                     </label>
-                    <button type="button" class="boton btn-agregar" data-id="${item.id}">Agregar al carrito</button>
-                </div>
-            `;
+                    <button type="button" class="boton btn-agregar">Agregar al carrito</button>
+                </div>`;
         }
 
         art.innerHTML = `
@@ -134,107 +107,102 @@ function pintarCards(lista, contenedor) {
             <h3>${item.titulo}</h3>
             <p>${item.descripcion}</p>
             <p class="precio">${precio}</p>
-            ${compra}
-        `;
+            ${compra}`;
         contenedor.appendChild(art);
+
+        if (item.tallas) {  // El botón agregar 
+            const boton = art.querySelector(".btn-agregar");
+            const talla = art.querySelector(".talla-select");
+            boton.addEventListener("click", () => {
+                agregar(item.id, talla.value);
+            });
+        }
     });
 }
 
-pintarCards(prendas, document.querySelector("#galeria"));              // solo existe en index.php
-pintarCards(servicios, document.querySelector("#lista-servicios"));    // solo existe en servicios.php
+const galeria = document.querySelector("#galeria"); // solo existe en index.php
+const listaServicios = document.querySelector("#lista-servicios"); // solo existe en servicios.php
 
+if (galeria) pintarCards(prendas, galeria);
+if (listaServicios) pintarCards(servicios, listaServicios);
 
-/* ---------- 4. CARRUSEL (index.php) ---------- */
+/* Carrusel*/
 const slides = document.querySelectorAll(".slide");
-const btnAnterior = document.querySelector("#anterior");
-const btnSiguiente = document.querySelector("#siguiente");
 const zonaPuntos = document.querySelector("#puntos");
-const carrusel = document.querySelector("#carrusel");
 const btnPausa = document.querySelector("#pausa");
 let actual = 0;
-let reloj = null;                       // aquí guardamos el temporizador del cambio automático
-let pausado = false;                    // true cuando la persona pulsó el botón de pausa
+let reloj = null; // aquí se guarda el temporizador que cambia las imagenes
+let pausado = false; // true cuando se pulsó el botón de pausa
 
-// Muestra la imagen número i (y marca su puntito)
-function mostrar(i) {
-    slides.forEach((s) => s.classList.remove("activa"));
+function mostrar(i) { // Muestra la imagen número i y marca su puntito
+    slides.forEach(s => s.classList.remove("activa"));
     slides[i].classList.add("activa");
-    document.querySelectorAll(".punto").forEach((p, n) => {
-        p.classList.toggle("activo", n === i);
-        p.setAttribute("aria-current", n === i);
+
+    const puntos = document.querySelectorAll(".punto");
+    puntos.forEach(p => p.classList.remove("activo"));
+    puntos[i].classList.add("activo");
+}
+
+function siguiente() { // El % (residuo) hace que después de la última imagen se vuelva a la primera, y al revés
+    actual = (actual + 1) % slides.length;
+    mostrar(actual);
+}
+
+function anterior() {
+    actual = (actual - 1 + slides.length) % slides.length;
+    mostrar(actual);
+}
+
+function iniciarReloj() { // Cambia de imagen sola cada 5 segundos. Se reinicia con cada clic.
+    clearInterval(reloj);
+    if (pausado === false) {
+        reloj = setInterval(siguiente, 5000); //tiempo en totaalll
+    }
+}
+
+if (slides.length > 0) {
+    slides.forEach((s, n) => { // Un puntito por cada imagen, los que estan abajo
+        const punto = document.createElement("button");
+        punto.type = "button";
+        punto.classList.add("punto");
+        punto.title = "Ir a la imagen " + (n + 1);
+        punto.addEventListener("click", () => {
+            actual = n;
+            mostrar(actual);
+            iniciarReloj();
+        });
+        zonaPuntos.appendChild(punto);
     });
-}
+    mostrar(actual);
 
-// El operador % hace que al llegar al final vuelva al principio (y al revés)
-function siguiente() { actual = (actual + 1) % slides.length; mostrar(actual); }
-function anterior()  { actual = (actual - 1 + slides.length) % slides.length; mostrar(actual); }
+    document.querySelector("#siguiente").addEventListener("click", () => {
+        siguiente();
+        iniciarReloj();
+    });
 
-function iniciarReloj() {
-    detenerReloj();
-    if (pausado) return;                    // si está en pausa, no arranca
-    reloj = setInterval(siguiente, 5000);   // cada 5 segundos
-}
-function detenerReloj() { clearInterval(reloj); }
+    document.querySelector("#anterior").addEventListener("click", () => {
+        anterior();
+        iniciarReloj();
+    });
 
-if (slides.length > 0 && btnAnterior && btnSiguiente) {
-    btnSiguiente.addEventListener("click", () => { siguiente(); iniciarReloj(); });
-    btnAnterior.addEventListener("click", () => { anterior(); iniciarReloj(); });
-
-    // Un puntito por cada imagen
-    if (zonaPuntos) {
-        slides.forEach((s, n) => {
-            const punto = document.createElement("button");
-            punto.type = "button";
-            punto.classList.add("punto");
-            punto.setAttribute("aria-label", "Ir a la imagen " + (n + 1));
-            punto.addEventListener("click", () => { actual = n; mostrar(actual); iniciarReloj(); });
-            zonaPuntos.appendChild(punto);
-        });
-        mostrar(actual);
-    }
-
-    // Botón de pausa / reanudar (para quien no quiere que las imágenes cambien solas)
-    if (btnPausa) {
-        btnPausa.addEventListener("click", () => {
-            pausado = !pausado;
-            btnPausa.classList.toggle("pausado", pausado);
-            btnPausa.setAttribute("aria-label", pausado ? "Reanudar carrusel" : "Pausar carrusel");
-            iniciarReloj();                 // si quedó pausado, iniciarReloj() no hace nada; si no, vuelve a arrancar
-        });
-    }
-
-    // Pausa mientras el mouse o el teclado están sobre el carrusel
-    if (carrusel) {
-        carrusel.addEventListener("mouseenter", detenerReloj);
-        carrusel.addEventListener("mouseleave", iniciarReloj);
-        carrusel.addEventListener("focusin", detenerReloj);
-        carrusel.addEventListener("focusout", iniciarReloj);
-
-        // En el celular: deslizar con el dedo
-        let inicioX = 0;
-        carrusel.addEventListener("touchstart", (e) => { inicioX = e.changedTouches[0].clientX; }, { passive: true });
-        carrusel.addEventListener("touchend", (e) => {
-            const diferencia = e.changedTouches[0].clientX - inicioX;
-            if (Math.abs(diferencia) > 40) {            // un deslizamiento corto no cuenta
-                if (diferencia < 0) siguiente(); else anterior();
-                iniciarReloj();
-            }
-        });
-    }
+    btnPausa.addEventListener("click", () => { // Botón de pausa y reanudar
+        pausado = !pausado; // si era false pasa a true, y al revés
+        btnPausa.classList.toggle("pausado"); // cambia el ícono (el CSS decide cuál se ve)
+        iniciarReloj();
+    });
 
     iniciarReloj();
 }
 
-
-/* ---------- 5. VALIDACIÓN DEL FORMULARIO (contacto.php) ---------- */
+/* Validacion contacto (contacto.php)*/
 const form = document.querySelector("#formulario");
 
 if (form) {
     form.addEventListener("submit", (e) => {
-        const nombre = form.nombre.value.trim();     // trim() quita espacios al inicio y al final
-        const correo = form.correo.value.trim();     // OJO: es "correo", igual que el name del input
+        const nombre = form.nombre.value.trim(); //trim() quita espacios al inicio y al final
+        const correo = form.correo.value.trim(); //correo igual que el name del input
         const mensaje = form.mensaje.value.trim();
-        const errores = [];
+        let errores = [];
 
         if (nombre === "") errores.push("El nombre es obligatorio.");
         if (!correo.includes("@") || !correo.includes(".")) errores.push("El correo debe ser válido.");
@@ -243,305 +211,354 @@ if (form) {
         const zonaMensajes = document.querySelector("#mensajes");
 
         if (errores.length > 0) {
-            e.preventDefault();                       // frena el envío del formulario
+            e.preventDefault();// frena el envío del formulario
             zonaMensajes.textContent = errores.join(" ");
         } else {
-            zonaMensajes.textContent = "";            // todo bien: se limpia y el formulario se envía
+            zonaMensajes.textContent = ""; // todo bien: se limpia y el formulario se envía
         }
     });
 }
 
-
-/* ---------- 6. CARRITO DE COMPRAS ---------- */
-// El carrito es un arreglo de líneas:  [{ id: "vestido-punk", talla: "M", cantidad: 2 }, ...]
-// Cada vez que cambia se guarda en localStorage (para que no se pierda al recargar) y se vuelve a dibujar.
-// El PRECIO no se guarda en el carrito: siempre se lee del arreglo "prendas" (así coincide con la galería).
-// El HTML está en carrito.php, que se incluye desde footer.php: por eso existe en todas las páginas.
-const COSTO_ENVIO = 3000;               // lo que cuesta el envío en compras menores a ENVIO_GRATIS_DESDE
-const ENVIO_GRATIS_DESDE = 40000;       // desde este subtotal el envío es gratis
-
+/*Carrito de compras, El PRECIO no se guarda en el carrito: siempre se busca en el arreglo prendas*/
+// El HTML del carrito está en carrito.php, que footer.php incluye en todas las páginas.
+const COSTO_ENVIO = 3000; // lo que cuesta el envío en compras menores a envio gratis
+const ENVIO_GRATIS_DESDE = 40000; // desde este subtotal el envío es gratis
 const panelCarrito = document.querySelector("#carrito");
 const overlay = document.querySelector("#overlay");
 const btnCarrito = document.querySelector("#btnCarrito");
 const listaCarrito = document.querySelector("#carritoLista");
+const btnPagar = document.querySelector("#btnPagar");
+const btnVaciar = document.querySelector("#btnVaciar");
 const aviso = document.querySelector("#aviso");
 
-const buscarPrenda = (id) => prendas.find((p) => p.id === id);
+let carrito = JSON.parse(localStorage.getItem("dr3x-carrito")) || []; // Lo que había guardado en el navegador
 
-// Al cargar la página se recupera lo guardado (si no hay nada, el carrito empieza vacío)
-let carrito = [];
-try {
-    const guardado = JSON.parse(localStorage.getItem("dr3x-carrito")) || [];
-    // Solo se aceptan líneas válidas: la prenda existe, la talla es una de las suyas y la cantidad es un entero
-    carrito = guardado.filter((l) => buscarPrenda(l.id) && buscarPrenda(l.id).tallas.includes(l.talla) && Number.isInteger(l.cantidad) && l.cantidad > 0);
-} catch (error) {
-    carrito = [];
-}
-
-// Unidades, subtotal, ahorro, envío y total
-function calcularTotales() {
-    let unidades = 0, subtotal = 0, ahorro = 0;
-    carrito.forEach((l) => {
-        const p = buscarPrenda(l.id);
-        unidades += l.cantidad;
-        subtotal += precioFinal(p) * l.cantidad;
-        ahorro += (p.precio - precioFinal(p)) * l.cantidad;     // lo que se ahorra con la oferta
-    });
-    const envio = (subtotal === 0 || subtotal >= ENVIO_GRATIS_DESDE) ? 0 : COSTO_ENVIO;
-    return { unidades, subtotal, ahorro, envio, total: subtotal + envio };
-}
-
-// Guarda el carrito y lo vuelve a dibujar
-function actualizar() {
-    try {
-        localStorage.setItem("dr3x-carrito", JSON.stringify(carrito));
-    } catch (error) {
-        // sin localStorage el carrito funciona igual, pero no se recuerda al recargar
+function buscarPrenda(id) { // Busca una prenda por su id en el arreglo "prendas"
+    for (let i = 0; i < prendas.length; i++) {
+        if (prendas[i].id === id) return prendas[i];
     }
+}
+
+function agregar(id, talla) { // Agrega una prenda (con su talla) al carrito
+    let existe = false;// ¿Ya hay esa misma prenda en esa misma talla? Entonces solo sube la cantidad
+    carrito.forEach(linea => {
+        if (linea.id === id && linea.talla === talla) {
+            linea.cantidad++;
+            existe = true;
+        }
+    });
+    if (existe === false) {
+        carrito.push({ id: id, talla: talla, cantidad: 1 });
+    }
+
+    actualizar();
+    avisar(buscarPrenda(id).titulo + " (talla " + talla + ") agregado al carrito");
+}
+
+// Calcula unidades, subtotal, ahorro, envío y total
+function calcularTotales() {
+    let unidades = 0;
+    let subtotal = 0;
+    let ahorro = 0; // cuánto se ahorra con la oferta
+    carrito.forEach(linea => {
+        const p = buscarPrenda(linea.id);
+        unidades += linea.cantidad;
+        subtotal += precioFinal(p) * linea.cantidad;
+        ahorro += (p.precio - precioFinal(p)) * linea.cantidad;
+    });
+
+    let envio = COSTO_ENVIO;
+    if (subtotal === 0 || subtotal >= ENVIO_GRATIS_DESDE) envio = 0;
+
+    return { unidades: unidades, subtotal: subtotal, ahorro: ahorro, envio: envio, total: subtotal + envio };
+}
+function actualizar() {//Guarda el carrito y lo vuelve a dibujar
+    localStorage.setItem("dr3x-carrito", JSON.stringify(carrito));
     pintarCarrito();
 }
 
 function pintarCarrito() {
     const t = calcularTotales();
 
-    // Las líneas (una por cada prenda + talla)
+    // Las líneas del carrito (una por cada prenda + talla)
+    listaCarrito.innerHTML = ""; // limpiar antes de dibujar
     if (carrito.length === 0) {
         listaCarrito.innerHTML = `
             <div class="carrito-vacio">
                 <p><strong>Tu carrito está vacío.</strong></p>
                 <p>Agrega alguna prenda desde la galería.</p>
                 <a href="index.php#prendas" class="boton" id="verPrendas">Ver prendas</a>
-            </div>
-        `;
-    } else {
-        listaCarrito.innerHTML = carrito.map((linea, i) => {
-            const p = buscarPrenda(linea.id);
-            return `
-                <article class="linea" data-i="${i}">
-                    <img src="${p.img}" alt="${p.alt}">
-                    <div class="linea-info">
-                        <h3>${p.titulo}</h3>
-                        <p class="linea-tipo">${p.tipo} · Talla ${linea.talla}</p>
-                        <p class="linea-unitario">${enOferta(p) ? `<del>${dinero(p.precio)}</del>` : ""}${dinero(precioFinal(p))} c/u</p>
-                        <div class="linea-fila">
-                            <div class="cantidad" role="group" aria-label="Cantidad de ${p.titulo}">
-                                <button type="button" data-accion="menos" aria-label="Quitar una unidad" ${linea.cantidad === 1 ? "disabled" : ""}>&minus;</button>
-                                <span>${linea.cantidad}</span>
-                                <button type="button" data-accion="mas" aria-label="Agregar una unidad">+</button>
-                            </div>
-                            <strong class="linea-precio">${dinero(precioFinal(p) * linea.cantidad)}</strong>
-                        </div>
-                        <button type="button" class="quitar" data-accion="quitar">Quitar</button>
-                    </div>
-                </article>
-            `;
-        }).join("");
+            </div>`;
+        document.querySelector("#verPrendas").addEventListener("click", cerrarCarrito);
     }
 
-    // Los números del panel
-    document.querySelector("#carritoConteo").textContent = t.unidades > 0 ? "(" + t.unidades + ")" : "";
+    carrito.forEach((linea, i) => {
+        const p = buscarPrenda(linea.id);
+
+        let precioAntes = "";
+        if (enOferta(p)) precioAntes = `<del>${dinero(p.precio)}</del>`;
+
+        let desactivado = "";// con 1 unidad el botón − no se puede usar
+        if (linea.cantidad === 1) desactivado = "disabled";
+
+        const art = document.createElement("article");
+        art.classList.add("linea");
+        art.innerHTML = `
+            <img src="${p.img}" alt="${p.alt}">
+            <div class="linea-info">
+                <h3>${p.titulo}</h3>
+                <p class="linea-tipo">${p.tipo} · Talla ${linea.talla}</p>
+                <p class="linea-unitario">${precioAntes}${dinero(precioFinal(p))} c/u</p>
+                <div class="linea-fila">
+                    <div class="cantidad">
+                        <button type="button" class="menos" aria-label="Quitar una unidad" ${desactivado}>&minus;</button>
+                        <span>${linea.cantidad}</span>
+                        <button type="button" class="mas" aria-label="Agregar una unidad">+</button>
+                    </div>
+                    <strong class="linea-precio">${dinero(precioFinal(p) * linea.cantidad)}</strong>
+                </div>
+                <button type="button" class="quitar">Quitar</button>
+            </div>`;
+        listaCarrito.appendChild(art);
+
+        art.querySelector(".mas").addEventListener("click", () => {// funciones de clics se programan aquí
+            linea.cantidad++;
+            actualizar();
+        });
+        art.querySelector(".menos").addEventListener("click", () => {
+            linea.cantidad--;
+            actualizar();
+        });
+        art.querySelector(".quitar").addEventListener("click", () => {
+            carrito.splice(i, 1); // borra 1 elemento, el de la posición i
+            actualizar();
+        });
+    });
+
+    const conteo = document.querySelector("#carritoConteo"); // Los números del panel
+    conteo.textContent = "";
+    if (t.unidades > 0) conteo.textContent = "(" + t.unidades + ")";
+
     document.querySelector("#totalSubtotal").textContent = dinero(t.subtotal);
-    document.querySelector("#totalEnvio").textContent = t.subtotal > 0 && t.envio === 0 ? "Gratis" : dinero(t.envio);
+
+    const textoEnvio = document.querySelector("#totalEnvio");
+    textoEnvio.textContent = dinero(t.envio);
+    if (t.subtotal > 0 && t.envio === 0) textoEnvio.textContent = "Gratis";
+
     document.querySelector("#totalAhorro").textContent = "−" + dinero(t.ahorro);
-    document.querySelector("#filaAhorro").classList.toggle("oculto", t.ahorro === 0);   // solo se ve si hay ahorro
+    const filaAhorro = document.querySelector("#filaAhorro");
+    filaAhorro.classList.add("oculto");
+    if (t.ahorro > 0) filaAhorro.classList.remove("oculto");// solo se ve si hay ahorro
+
     document.querySelector("#totalFinal").textContent = dinero(t.total);
 
-    // Barra de "envío gratis"
-    const barra = document.querySelector("#envioBarra");
+    const barra = document.querySelector("#envioBarra");  // Barra de "envío gratis"
     barra.max = ENVIO_GRATIS_DESDE;
-    barra.value = Math.min(t.subtotal, ENVIO_GRATIS_DESDE);
-    document.querySelector("#envioMensaje").textContent = t.subtotal >= ENVIO_GRATIS_DESDE
-        ? "¡Tienes envío gratis!"
-        : "Te faltan " + dinero(ENVIO_GRATIS_DESDE - t.subtotal) + " para el envío gratis.";
+    barra.value = t.subtotal;
+    const mensajeEnvio = document.querySelector("#envioMensaje");
+    if (t.subtotal >= ENVIO_GRATIS_DESDE) {
+        mensajeEnvio.textContent = "¡Tienes envío gratis!";
+    } else {
+        mensajeEnvio.textContent = "Te faltan " + dinero(ENVIO_GRATIS_DESDE - t.subtotal) + " para el envío gratis.";
+    }
 
-    // El numerito rojo y el total que se ven en el encabezado
-    document.querySelector("#contadorCarrito").textContent = t.unidades;
-    document.querySelector("#contadorCarrito").classList.toggle("vacio", t.unidades === 0);
+    const contador = document.querySelector("#contadorCarrito"); // El numerito rojo y el total que se ven en el encabezado
+    contador.textContent = t.unidades;
+    contador.classList.remove("vacio");
+    if (t.unidades === 0) contador.classList.add("vacio");
     document.querySelector("#miniTotal").textContent = dinero(t.subtotal);
 
-    document.querySelector("#btnPagar").disabled = carrito.length === 0;                         // sin productos no se puede pagar
-    document.querySelector("#btnVaciar").classList.toggle("oculto", carrito.length === 0);
+    if (carrito.length === 0) {// Sin productos no se puede pagar ni vaciar
+        btnPagar.disabled = true;
+        btnVaciar.classList.add("oculto");
+    } else {
+        btnPagar.disabled = false;
+        btnVaciar.classList.remove("oculto");
+    }
 }
 
-// Cartelito que aparece abajo unos segundos
-let temporizador;
+let temporizador = null; // Cartelito que aparece abajo unos segundos
 function avisar(texto) {
     aviso.textContent = texto;
     aviso.classList.add("visible");
     clearTimeout(temporizador);
-    temporizador = setTimeout(() => aviso.classList.remove("visible"), 2400);
+    temporizador = setTimeout(() => {
+        aviso.classList.remove("visible");
+    }, 2400);
 }
 
-// Abrir y cerrar el panel del carrito
-function abrirCarrito() {
-    aviso.classList.remove("visible");              // el cartelito no tapa el panel
+function abrirCarrito() { // Abrir y cerrar el panel del carrito (solo agregan y quitan clases, el CSS hace el resto)
+    aviso.classList.remove("visible");// el cartelito no tapa el panel
     panelCarrito.classList.add("abierto");
     overlay.classList.add("abierto");
-    document.body.classList.add("sin-scroll");      // que la página de atrás no se mueva
-    btnCarrito.setAttribute("aria-expanded", "true");
-    document.querySelector("#cerrarCarrito").focus();
+    document.body.classList.add("sin-scroll"); //Para que la página de atrás no se mueva
 }
 
 function cerrarCarrito() {
     panelCarrito.classList.remove("abierto");
     overlay.classList.remove("abierto");
     document.body.classList.remove("sin-scroll");
-    btnCarrito.setAttribute("aria-expanded", "false");
 }
 
 btnCarrito.addEventListener("click", abrirCarrito);
 document.querySelector("#cerrarCarrito").addEventListener("click", cerrarCarrito);
 overlay.addEventListener("click", cerrarCarrito);
-document.querySelector("#btnVaciar").addEventListener("click", () => {
+
+btnVaciar.addEventListener("click", () => {
     carrito = [];
     actualizar();
     avisar("Carrito vaciado");
 });
 
-// Botones +, − y Quitar de cada línea. Un solo "oyente" en la lista sirve para todos (delegación de eventos).
-listaCarrito.addEventListener("click", (e) => {
-    if (e.target.closest("#verPrendas")) cerrarCarrito();       // el enlace del carrito vacío
-
-    const boton = e.target.closest("[data-accion]");
-    if (!boton) return;
-    const i = Number(boton.closest(".linea").dataset.i);        // la posición de la línea en el arreglo
-
-    if (boton.dataset.accion === "mas") carrito[i].cantidad++;
-    if (boton.dataset.accion === "menos") carrito[i].cantidad--;
-    if (boton.dataset.accion === "quitar") carrito.splice(i, 1);
-    actualizar();
-});
-
-// Botón "Agregar al carrito" de las tarjetas. Las tarjetas se dibujan con JavaScript (sección 3),
-// por eso se escucha en todo el documento y se busca el botón que recibió el clic.
-document.addEventListener("click", (e) => {
-    const boton = e.target.closest(".btn-agregar");
-    if (!boton) return;
-
-    const prenda = buscarPrenda(boton.dataset.id);
-    const talla = boton.closest(".tarjeta").querySelector(".talla-select").value;
-
-    // ¿Ya hay esa misma prenda en esa misma talla? Entonces solo sube la cantidad
-    const existente = carrito.find((l) => l.id === prenda.id && l.talla === talla);
-    if (existente) existente.cantidad++;
-    else carrito.push({ id: prenda.id, talla: talla, cantidad: 1 });
-
-    actualizar();
-    avisar(prenda.titulo + " (talla " + talla + ") agregado al carrito");
-});
-
 pintarCarrito();
 
-
-/* ---------- 7. PAGO SIMULADO ---------- */
-// No cobra nada ni envía ningún dato: valida los campos, espera unos segundos y muestra "pedido confirmado".
-const modalPago = document.querySelector("#modalPago");
+const modalPago = document.querySelector("#modalPago"); //Menu de pago y carrito, claramente no funcionará
 const formPago = document.querySelector("#formPago");
 const mensajesPago = document.querySelector("#mensajesPago");
-const nombresMetodo = { tarjeta: "Tarjeta", sinpe: "SINPE Móvil", contraentrega: "Contra entrega" };
-let procesando = false;                 // mientras es true no se puede cerrar la ventana
+let procesando = false; // mientras es true no se puede cerrar la ventana
 
-// Muestra solo uno de los 3 pasos: el formulario, "procesando" o "confirmado"
-function mostrarPaso(cual) {
-    ["formPago", "pasoProcesando", "pasoExito"].forEach((id) => {
-        document.querySelector("#" + id).classList.toggle("oculto", id !== cual);
-    });
+function soloNumeros(texto) { // Devuelve el texto sin letras ni símbolos, solo los números.
+    let resultado = "";
+    for (let i = 0; i < texto.length; i++) {
+        if (texto[i] >= "0" && texto[i] <= "9") resultado += texto[i];
+    }
+    return resultado;
 }
 
-// Muestra solo el panel del método elegido (tarjeta, SINPE o contra entrega)
-formPago.addEventListener("change", () => {
-    document.querySelectorAll(".panel-pago").forEach((panel) => {
-        panel.classList.toggle("activo", panel.dataset.metodo === formPago.metodo.value);
-    });
-});
+function mostrarPaso(cual) { // Muestra solo uno de los 3 pasos: el formulario, "procesando" o "confirmado"
+    document.querySelector("#formPago").classList.add("oculto");
+    document.querySelector("#pasoProcesando").classList.add("oculto");
+    document.querySelector("#pasoExito").classList.add("oculto");
+    document.querySelector("#" + cual).classList.remove("oculto");
+}
+
+function mostrarPanelPago() { // Muestra solo los campos del método elegido (tarjeta, SINPE o contra entrega)
+    document.querySelectorAll(".panel-pago").forEach(panel => panel.classList.remove("activo"));
+    document.querySelector("#panel-" + formPago.metodo.value).classList.add("activo");
+}
+formPago.addEventListener("change", mostrarPanelPago);
 
 function abrirPago() {
     const t = calcularTotales();
-    formPago.reset();                           // campos vacíos cada vez que se abre
-    formPago.dispatchEvent(new Event("change"));   // y vuelve a mostrarse el panel de tarjeta
+    formPago.reset(); // campos vacíos cada vez que se abre
+    mostrarPanelPago();
     mensajesPago.textContent = "";
     mostrarPaso("formPago");
-    document.querySelector("#pagoTotal").textContent = dinero(t.total);
-    document.querySelector("#pagoUnidades").textContent = "(" + t.unidades + (t.unidades === 1 ? " producto" : " productos") + ")";
 
-    cerrarCarrito();                            // se cierra el panel del carrito...
+    let palabra = " productos";
+    if (t.unidades === 1) palabra = " producto";
+    document.querySelector("#pagoTotal").textContent = dinero(t.total);
+    document.querySelector("#pagoUnidades").textContent = "(" + t.unidades + palabra + ")";
+
+    cerrarCarrito();//se cierra el panel del carrito
     aviso.classList.remove("visible");
-    modalPago.classList.add("abierto");         // ...y se abre la ventana de pago
+    modalPago.classList.add("abierto");//y se abre la ventana de pago
     document.body.classList.add("sin-scroll");
-    formPago.nombre.focus();
 }
 
 function cerrarPago() {
-    if (procesando) return;
-    modalPago.classList.remove("abierto");
-    document.body.classList.remove("sin-scroll");
+    if (procesando === false) {
+        modalPago.classList.remove("abierto");
+        document.body.classList.remove("sin-scroll");
+    }
 }
 
-document.querySelector("#btnPagar").addEventListener("click", abrirPago);
+btnPagar.addEventListener("click", abrirPago);
 document.querySelector("#cerrarPago").addEventListener("click", cerrarPago);
 document.querySelector("#btnSeguir").addEventListener("click", cerrarPago);
-modalPago.addEventListener("click", (e) => { if (e.target === modalPago) cerrarPago(); });   // clic en el fondo oscuro
-
-// La tecla Escape cierra lo que esté abierto
-document.addEventListener("keydown", (e) => {
-    if (e.key !== "Escape") return;
-    if (modalPago.classList.contains("abierto")) cerrarPago();
-    else cerrarCarrito();
+modalPago.addEventListener("click", (e) => {
+    if (e.target === modalPago) cerrarPago();   // clic en el fondo oscuro
 });
 
-// Mientras se escribe, la tarjeta y la fecha se acomodan solas
-formPago.tarjeta.addEventListener("input", () => {
-    const digitos = formPago.tarjeta.value.replace(/\D/g, "").slice(0, 16);      // \D = todo lo que NO es número; slice = máximo 16 dígitos
-    formPago.tarjeta.value = digitos.replace(/(.{4})/g, "$1 ").trim();           // un espacio cada 4 números
+document.addEventListener("keydown", (e) => {// La tecla Escape cierra lo que esté abierto
+    if (e.key === "Escape") {
+        if (modalPago.classList.contains("abierto")) cerrarPago();
+        else cerrarCarrito();
+    }
 });
+
+formPago.tarjeta.addEventListener("input", () => { // Mientras se escribe, la tarjeta y la fecha se acomodan solas
+    const digitos = soloNumeros(formPago.tarjeta.value).slice(0, 16);// máximo 16 números
+    let texto = "";
+    for (let i = 0; i < digitos.length; i++) {
+        if (i > 0 && i % 4 === 0) texto += " "; // un espacio cada 4 números
+        texto += digitos[i];
+    }
+    formPago.tarjeta.value = texto;
+});
+
 formPago.vence.addEventListener("input", () => {
-    const digitos = formPago.vence.value.replace(/\D/g, "").slice(0, 4);         // máximo 4 dígitos: MMAA
-    formPago.vence.value = digitos.length > 2 ? digitos.slice(0, 2) + "/" + digitos.slice(2) : digitos;   // pone la barra sola
+    const digitos = soloNumeros(formPago.vence.value).slice(0, 4);// máximo 4 números: MMAA
+    if (digitos.length > 2) {
+        formPago.vence.value = digitos.slice(0, 2) + "/" + digitos.slice(2); // pone la barra sola
+    } else {
+        formPago.vence.value = digitos;
+    }
 });
 
-// Al enviar: se validan los campos (igual que el formulario de contacto) y se simula el pago
-formPago.addEventListener("submit", (e) => {
-    e.preventDefault();                         // este formulario NUNCA se envía a ningún servidor
+formPago.addEventListener("submit", (e) => { // Al enviar: se validan los campos y se simula el pago
+    e.preventDefault(); // este formulario no sirve en realidad xd
     const metodo = formPago.metodo.value;
-    const errores = [];
+    let errores = [];
 
     if (formPago.nombre.value.trim() === "") errores.push("Escriba su nombre.");
-    // El correo no se usa para nada (es una práctica): solo se revisa que tenga @
-    if (!formPago.correo.value.includes("@")) errores.push("El correo debe tener @ (por ejemplo ana@correo.com).");
+    if (!formPago.correo.value.includes("@")) errores.push("El correo debe tener @ (por ejemplo ana@correo.com)."); //se busca el @
 
     if (metodo === "tarjeta") {
-        if (!/^\d{16}$/.test(formPago.tarjeta.value.replaceAll(" ", ""))) errores.push("El número de tarjeta debe tener 16 dígitos.");
-        if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(formPago.vence.value)) errores.push("La fecha debe tener el formato MM/AA.");
-        if (!/^\d{3,4}$/.test(formPago.cvv.value)) errores.push("El CVV debe tener 3 o 4 dígitos.");
+        const fecha = formPago.vence.value;
+        const mes = Number(fecha.slice(0, 2));
+        const cvv = formPago.cvv.value;
+        if (soloNumeros(formPago.tarjeta.value).length !== 16) errores.push("El número de tarjeta debe tener 16 dígitos.");
+        if (fecha.length !== 5 || mes < 1 || mes > 12) errores.push("La fecha debe tener el formato MM/AA.");
+        if (soloNumeros(cvv) !== cvv || cvv.length < 3) errores.push("El CVV debe tener 3 o 4 dígitos.");
     }
-    if (metodo === "sinpe" && !/^\d{8}$/.test(formPago.telefono.value)) errores.push("El teléfono debe tener 8 dígitos.");
-    if (metodo === "contraentrega" && formPago.direccion.value.trim() === "") errores.push("Escriba la dirección de entrega.");
+    if (metodo === "sinpe") {
+        const telefono = formPago.telefono.value;
+        if (soloNumeros(telefono) !== telefono || telefono.length !== 8) errores.push("El teléfono debe tener 8 dígitos.");
+    }
+    if (metodo === "contraentrega") {
+        if (formPago.direccion.value.trim() === "") errores.push("Escriba la dirección de entrega.");
+    }
 
-    mensajesPago.textContent = errores.join(" ");
-    if (errores.length > 0) return;
-
-    // Todo bien: "procesamos" el pago (es solo una espera de unos segundos)
-    procesando = true;
-    mostrarPaso("pasoProcesando");
-    setTimeout(() => finalizarPedido(metodo), 2500);
+    if (errores.length > 0) {
+        mensajesPago.textContent = errores.join(" ");
+    } else { // Todo bien: "procesamos" el pago (es solo una espera de unos segundos)
+        procesando = true;
+        mostrarPaso("pasoProcesando");
+        setTimeout(() => {
+            finalizarPedido(metodo);
+        }, 2500);
+    }
 });
 
-// Muestra el "recibo" y vacía el carrito
-function finalizarPedido(metodo) {
+function finalizarPedido(metodo) { // Muestra el "recibo" y vacía el carrito
     const t = calcularTotales();
-    const lineas = carrito.map((l) => {
-        const p = buscarPrenda(l.id);
-        return `<li>${l.cantidad} × ${p.titulo} (${p.tipo}, talla ${l.talla}) — ${dinero(precioFinal(p) * l.cantidad)}</li>`;
-    });
-    if (t.envio > 0) lineas.push(`<li>Envío — ${dinero(t.envio)}</li>`);
 
-    document.querySelector("#exitoLista").innerHTML = lineas.join("");
-    document.querySelector("#exitoNumero").textContent = "DR3X-" + Math.floor(100000 + Math.random() * 900000);
+    const lista = document.querySelector("#exitoLista");
+    lista.innerHTML = "";
+    carrito.forEach(linea => {
+        const p = buscarPrenda(linea.id);
+        const li = document.createElement("li");
+        li.textContent = linea.cantidad + " × " + p.titulo + " (" + p.tipo + ", talla " + linea.talla + ") — " + dinero(precioFinal(p) * linea.cantidad);
+        lista.appendChild(li);
+    });
+    if (t.envio > 0) {
+        const li = document.createElement("li");
+        li.textContent = "Envío — " + dinero(t.envio);
+        lista.appendChild(li);
+    }
+
+    let nombreMetodo = "Tarjeta";
+    if (metodo === "sinpe") nombreMetodo = "SINPE Móvil";
+    if (metodo === "contraentrega") nombreMetodo = "Contra entrega";
+
+    const numero = Math.floor(100000 + Math.random() * 900000);// número de pedido al azar
+    document.querySelector("#exitoNumero").textContent = "DR3X-" + numero;
     document.querySelector("#exitoCorreo").textContent = "Recibo para: " + formPago.correo.value.trim();
     document.querySelector("#exitoTotal").textContent = dinero(t.total);
-    document.querySelector("#exitoMetodo").textContent = "Método de pago: " + nombresMetodo[metodo] + ".";
+    document.querySelector("#exitoMetodo").textContent = "Método de pago: " + nombreMetodo + ".";
 
-    carrito = [];                               // el carrito queda en cero
+    carrito = []; // el carrito queda en cero
     actualizar();
     procesando = false;
     mostrarPaso("pasoExito");

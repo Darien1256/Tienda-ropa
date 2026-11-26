@@ -1,12 +1,4 @@
-/* =========================================================
-   DR3X · estilos.css
-   Se escribe primero para el CELULAR (mobile first) y al final
-   se agregan las media queries para pantallas más grandes.
-   ========================================================= */
-
-
-/* ---------- 1. VARIABLES (tu paleta y medidas) ----------
-   Para cambiar los colores de TODO el sitio, solo cambia estos valores. */
+/*Paletas generales*/
 :root {
   --color-principal: #111111;   /* header, portada, footer, botones */
   --color-acento: #d62828;      /* detalles: rayitas, hover, signos + */
@@ -15,9 +7,7 @@
   --color-borde: #e2e2e0;       /* líneas suaves */
   --ancho-max: 1140px;          /* ancho máximo del contenido */
 }
-
-
-/* ---------- 2. RESET Y BASE ---------- */
+/*Reset y base*/
 *, *::before, *::after { box-sizing: border-box; }
 
 body {
@@ -31,8 +21,7 @@ body {
 img { max-width: 100%; height: auto; }
 
 h1, h2, h3 { line-height: 1.2; }
-
-/* Títulos de sección con una rayita de color debajo */
+/*Rayas debajo de cada titulo*/
 h2 {
   margin: 0 0 1.5rem;
   font-size: 1.5rem;
@@ -50,7 +39,7 @@ h2::after,
 }
 .contenedor h1 { margin: 0 0 1rem; font-size: 2rem; text-transform: uppercase; letter-spacing: .04em; }
 
-/* El contenido no queda pegado a los bordes */
+/*El contenido no queda pegado a los bordes*/
 .contenedor {
   width: 100%;
   max-width: var(--ancho-max);
@@ -63,17 +52,16 @@ h2::after,
 .contenedor li { margin-bottom: .4rem; }
 .contenedor li::marker { color: var(--color-acento); }
 
-
-/* ---------- 3. HEADER, MENÚ Y HAMBURGUESA ---------- */
-.header {                       /* logo a un lado, menú al otro */
+/*Header y hamburguesa*/
+.header { /* logo a un lado, menú al otro */
   display: flex;
-  flex-wrap: wrap;              /* el menú puede bajar de línea en el celular */
+  flex-wrap: wrap; /* el menú puede bajar de línea en el celular */
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
   background: #fff;
   border-bottom: 1px solid var(--color-borde);
-  position: sticky;             /* el header se queda arriba al bajar */
+  position: sticky; /* el header se queda arriba al bajar */
   top: 0;
   z-index: 10;
 }
@@ -86,7 +74,7 @@ h2::after,
   text-decoration: none;
 }
 
-.menu ul {                      /* celular: los enlaces van uno debajo del otro */
+.menu ul { /* celular: los enlaces van uno debajo del otro */
   display: flex;
   flex-direction: column;
   gap: .25rem;
@@ -106,7 +94,7 @@ h2::after,
 }
 .menu a:hover { color: var(--color-acento); }
 
-.hamburguesa {                  /* las tres rayitas */
+.hamburguesa { /* las tres rayitas */
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -121,15 +109,14 @@ h2::after,
   height: 3px;
   background: var(--color-texto);
   border-radius: 2px;
-  transition: transform .2s, opacity .2s;   /* para animarlas en la clase 4 */
+  transition: transform .2s, opacity .2s; /* para animarlas en la clase 4 */
 }
 .hamburguesa:focus-visible { outline: 2px solid var(--color-acento); }
 .hamburguesa.activo span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
 .hamburguesa.activo span:nth-child(2) { opacity: 0; }
 .hamburguesa.activo span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-
-/* ---------- 4. PORTADA, BOTÓN Y FOOTER ---------- */
+/*Portada y footer*/
 .portada {
   padding: 4rem 1rem;
   text-align: center;
@@ -157,7 +144,7 @@ h2::after,
 }
 .boton:hover { background: var(--color-acento); }
 
-.portada .boton {               /* clase + clase = peso 20: gana a .boton */
+.portada .boton { /* clase + clase = peso 20: gana a .boton */
   background: #fff;
   color: var(--color-principal);
 }
@@ -191,15 +178,14 @@ h2::after,
   padding: 0;
 }
 
-
-/* ---------- 5. CARDS CON WRAP ---------- */
+/*Cards y ofertas*/
 .cards { display: flex; flex-wrap: wrap; gap: 1rem; }
 
 .tarjeta {
-  position: relative;           /* la etiqueta de oferta se coloca respecto a la tarjeta */
-  display: flex;                /* para que el botón quede siempre abajo */
+  position: relative; /* la etiqueta de oferta se coloca respecto a la tarjeta */
+  display: flex; /* para que el botón quede siempre abajo */
   flex-direction: column;
-  width: 100%;                  /* celular: una por fila */
+  width: 100%;  /* celular: una por fila */
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
@@ -218,12 +204,10 @@ h2::after,
   color: var(--color-acento);
 }
 
-
-/* ---------- 6. GALERÍA DE PRENDAS (fotos verticales) ---------- */
+/*Prendas(fotos verticales)*/
 .cards-prendas .tarjeta img { aspect-ratio: 4 / 5; object-position: center 20%; }   /* las servicios usan 16/10 */
 
-
-/* ---------- 7. ACCORDION (la apariencia; main.js lo abre y lo cierra) ---------- */
+/*Apariencia acordion*/
 .accordion { max-width: 760px; }
 .accordion .item {
   margin-bottom: .75rem;
@@ -282,14 +266,14 @@ h2::after,
   transition: background .2s;
 }
 .formulario button:hover { background: var(--color-acento); }
-.mensajes {                     /* aquí escribe JavaScript los errores del formulario */
+.mensajes { /*Errores de formulario*/
   min-height: 1.5rem;
   margin: .6rem 0 0;
   color: var(--color-acento);
   font-weight: 600;
 }
 
-/* ---------- 9. CARRITO EN EL ENCABEZADO ---------- */
+/*Carrito*/
 .acciones { display: flex; align-items: center; gap: .25rem; }   /* carrito + hamburguesa */
 
 .btn-carrito {
@@ -308,9 +292,9 @@ h2::after,
 }
 .btn-carrito:hover { color: var(--color-acento); }
 .btn-carrito:focus-visible { outline: 2px solid var(--color-acento); }
-.carrito-mini { display: none; }                  /* el total del encabezado se ve desde 701px */
+.carrito-mini { display: none; }/* el total del encabezado se ve desde 701px */
 
-.contador-carrito {                               /* el numerito rojo */
+.contador-carrito { /* el numerito rojo */
   position: absolute;
   top: -2px;
   left: 26px;
@@ -324,18 +308,17 @@ h2::after,
   background: var(--color-acento);
   border-radius: 10px;
 }
-.contador-carrito.vacio { display: none; }        /* con el carrito vacío no se muestra */
+.contador-carrito.vacio { display: none; } /* con el carrito vacío*/
 
-
-/* ---------- 10. CARRUSEL ---------- */
+/*Menú carrusel*/
 .carrusel {
   position: relative;
   overflow: hidden;
   background: var(--color-principal);
   border-radius: 10px;
 }
-.slides { position: relative; aspect-ratio: 4 / 3; }          /* celular: más alto */
-.slide {                                                      /* todas apiladas; solo la "activa" se ve */
+.slides { position: relative; aspect-ratio: 4 / 3; } /* celular: más alto */
+.slide { /* todas apiladas; solo la "activa" se ve */
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
   opacity: 0;
@@ -401,8 +384,7 @@ h2::after,
 .punto.activo { background: var(--color-acento); }
 .punto:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 
-
-/* ---------- 11. TARJETAS DE PRENDAS: tipo, talla y botón del carrito ---------- */
+/*Tarjetas de prendas: tipo, talla y botón del carrito*/
 .tarjeta .tipo {
   margin: 1rem 1rem 0;
   font-size: .75rem;
@@ -413,7 +395,7 @@ h2::after,
 }
 .tarjeta .tipo + h3 { margin-top: .25rem; }
 
-.compra {                                         /* talla + botón, siempre pegados al fondo de la tarjeta */
+.compra { /* talla + botón, siempre pegados al fondo de la tarjeta */
   display: flex;
   flex-direction: column;
   gap: .6rem;
@@ -432,8 +414,8 @@ button.boton { font: inherit; font-weight: bold; border: 0; cursor: pointer; }  
 .compra .boton { margin: 0; text-align: center; }
 
 
-/* ---------- 11b. OFERTA BLACK FRIDAY ---------- */
-.etiqueta-oferta {                                /* "-30%" en la esquina de la tarjeta */
+/*Ofertas de black friday*/
+.etiqueta-oferta { /*-30% en la esquina de la tarjeta */
   position: absolute;
   top: 0;
   left: 0;
@@ -447,14 +429,14 @@ button.boton { font: inherit; font-weight: bold; border: 0; cursor: pointer; }  
   border-radius: 0 0 8px 0;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, .3);
 }
-.precio-antes {                                   /* el precio viejo, tachado */
+.precio-antes {/* el precio viejo, tachado */
   margin-right: .5rem;
   font-size: .95rem;
   font-weight: 600;
   color: #777;
   text-decoration: line-through;
 }
-.slide-descuento {                                /* el círculo "-30%" del slide */
+.slide-descuento { /* el círculo -30% del slide */
   position: absolute;
   top: .5rem;
   left: .5rem;
@@ -471,7 +453,7 @@ button.boton { font: inherit; font-weight: bold; border: 0; cursor: pointer; }  
   box-shadow: 0 4px 12px rgba(0, 0, 0, .4);
   transform: rotate(-12deg);
 }
-.carrusel-pausa {                                 /* botón para pausar el cambio automático */
+.carrusel-pausa { /*botón para pausar el cambio automático*/
   position: absolute;
   top: .6rem;
   right: .6rem;
@@ -498,9 +480,8 @@ button.boton { font: inherit; font-weight: bold; border: 0; cursor: pointer; }  
 .linea-unitario del { margin-right: .35rem; }
 .totales .total-ahorro dt, .totales .total-ahorro dd { color: #2e7d32; }
 
-
-/* ---------- 12. PANEL DEL CARRITO (sale por la derecha) ---------- */
-.overlay {                                        /* fondo oscuro detrás del panel */
+/* Panel de carrito que sale de la derecha */
+.overlay { /* fondo oscuro detrás del panel */
   position: fixed;
   top: 0; right: 0; bottom: 0; left: 0;
   z-index: 40;
@@ -521,7 +502,7 @@ button.boton { font: inherit; font-weight: bold; border: 0; cursor: pointer; }  
   max-width: 420px;
   background: #fff;
   box-shadow: -6px 0 24px rgba(0, 0, 0, .25);
-  transform: translateX(100%);                    /* escondido fuera de la pantalla */
+  transform: translateX(100%);/* escondido fuera de la pantalla */
   visibility: hidden;
   transition: transform .3s, visibility .3s;
 }
@@ -537,7 +518,7 @@ button.boton { font: inherit; font-weight: bold; border: 0; cursor: pointer; }  
   border-bottom: 4px solid var(--color-acento);
 }
 .carrito-titulo { margin: 0; font-size: 1.15rem; }
-.carrito-titulo::after { display: none; }         /* sin la rayita roja de los demás h2 */
+.carrito-titulo::after { display: none; }/* sin la rayita roja de los demás h2 */
 
 .cerrar {
   width: 40px;
@@ -553,8 +534,8 @@ button.boton { font: inherit; font-weight: bold; border: 0; cursor: pointer; }  
 .cerrar:focus-visible { outline: 2px solid var(--color-acento); }
 
 .carrito-lista {
-  flex: 1;                                        /* ocupa el espacio que sobra */
-  overflow-y: auto;                               /* si hay muchos productos, la lista se desplaza */
+  flex: 1;/* ocupa el espacio que sobra */
+  overflow-y: auto; /* si hay muchos productos, la lista se desplaza */
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -646,8 +627,7 @@ button.boton { font: inherit; font-weight: bold; border: 0; cursor: pointer; }  
 }
 .enlace:hover { color: var(--color-acento); }
 
-
-/* ---------- 13. VENTANA DE PAGO (SIMULADA) ---------- */
+/*ventana de pago*/
 .modal {
   position: fixed;
   top: 0; right: 0; bottom: 0; left: 0;
@@ -678,7 +658,7 @@ button.boton { font: inherit; font-weight: bold; border: 0; cursor: pointer; }  
 .modal-caja h2::after { display: none; }
 .cerrar-oscuro { position: absolute; top: .4rem; right: .4rem; color: var(--color-texto); }
 
-.aviso-simulacion {                               /* el cartelito que deja claro que es de práctica */
+.aviso-simulacion {/* el cartelito que deja claro que es de práctica */
   margin: 0 0 1rem;
   padding: .7rem .9rem;
   font-size: .9rem;
@@ -759,14 +739,13 @@ button.boton { font: inherit; font-weight: bold; border: 0; cursor: pointer; }  
 .recibo li { margin: 0; padding: .5rem 0; font-size: .92rem; border-bottom: 1px dashed #aaa; }
 .recibo-total { margin: .5rem 0; font-size: 1.15rem; }
 
-
-/* ---------- 14. AVISO CORTO Y UTILIDADES ---------- */
-.aviso {                                          /* "Vestido punk agregado al carrito" */
+/*Avisos a agregar objetos al caarrito*/
+.aviso { /*Vestido punk agregado al carrito */
   position: fixed;
   left: 50%;
   bottom: 1.2rem;
   z-index: 70;
-  width: max-content;                             /* que no se encoja a la mitad por el left: 50% */
+  width: max-content; /* que no se encoja a la mitad por el left: 50% */
   max-width: calc(100% - 2rem);
   padding: .7rem 1.1rem;
   font-size: .9rem;
@@ -783,22 +762,17 @@ button.boton { font: inherit; font-weight: bold; border: 0; cursor: pointer; }  
 }
 .aviso.visible { opacity: 1; transform: translate(-50%, 0); }
 
-.oculto { display: none !important; }             /* esconder algo desde JavaScript con classList */
-.sin-scroll { overflow: hidden; }                 /* con el carrito abierto, la página de atrás no se mueve */
-section[id] { scroll-margin-top: 5.5rem; }        /* al saltar a #prendas, el header no tapa el título */
-@media (prefers-reduced-motion: no-preference) {  /* el desplazamiento suave solo si el sistema no pide menos movimiento */
+.oculto { display: none !important; } /* esconder algo desde JavaScript con classList */
+.sin-scroll { overflow: hidden; } /* con el carrito abierto, la página de atrás no se mueve */
+section[id] { scroll-margin-top: 5.5rem; } /* al saltar a #prendas, el header no tapa el título */
+@media (prefers-reduced-motion: no-preference) { /* el desplazamiento suave solo si el sistema no pide menos movimiento */
   html { scroll-behavior: smooth; }
 }
-
-/* =========================================================
-   MEDIA QUERIES · mobile first (min-width = "desde este ancho hacia arriba")
-   ========================================================= */
-
+/*^telefono*/
 /* base: celular */
-.menu { display: none; width: 100%; }                  /* en el celular lo abre la hamburguesa */
-.menu.abierto { display: block; flex-basis: 100%; }    /* main.js pone/quita "abierto" con JavaScript */
+.menu { display: none; width: 100%; }  /* en el celular lo abre la hamburguesa */
+.menu.abierto { display: block; flex-basis: 100%; } /* main.js pone/quita "abierto" con JavaScript */
 .menu.abierto ul { flex-direction: column; gap: 0; padding-top: 1rem; }
-
 
 @media (min-width: 501px) {
   .portada h1 { font-size: 2.1rem; }
@@ -807,7 +781,7 @@ section[id] { scroll-margin-top: 5.5rem; }        /* al saltar a #prendas, el he
 @media (min-width: 701px) {
   .portada { padding: 5rem 2rem; }
 
-  .tarjeta { width: calc(50% - .5rem); }           /* dos por fila */
+  .tarjeta { width: calc(50% - .5rem); } /* dos por fila */
 
   .slides { aspect-ratio: 16 / 9; }
   .slide-texto { padding: 3.5rem 2.5rem 2.6rem; }
@@ -815,7 +789,7 @@ section[id] { scroll-margin-top: 5.5rem; }        /* al saltar a #prendas, el he
   .slide-descuento { top: 1.2rem; left: 1.2rem; width: 84px; height: 84px; font-size: 1.6rem; }
   .carrusel-pausa { top: 1rem; right: 1rem; }
   .slide-texto p { display: block; max-width: 520px; }
-  .carrito-mini { display: inline; }               /* el total aparece junto al carrito */
+  .carrito-mini { display: inline; } /* el total aparece junto al carrito */
 
   .footer {
     flex-direction: row;
@@ -828,14 +802,13 @@ section[id] { scroll-margin-top: 5.5rem; }        /* al saltar a #prendas, el he
 }
 
 @media (min-width: 991px) {
-  .menu { display: block; flex-basis: auto; width: auto; }      /* menú normal en pantalla grande */
+  .menu { display: block; flex-basis: auto; width: auto; } /* menú normal en pantalla grande */
   .menu ul { flex-direction: row; gap: 1.5rem; margin: 0; }
   .hamburguesa { display: none; }
-  .menu.abierto ul { flex-direction: row; gap: 1.5rem; padding-top: 0; }   /* si quedó "abierto" y se agranda la ventana */
+  .menu.abierto ul { flex-direction: row; gap: 1.5rem; padding-top: 0; } /* si quedó "abierto" y se agranda la ventana */
 
-  .tarjeta { width: calc(33.333% - .67rem); }      /* tres por fila */
-  .acciones { order: 3; }                           /* escritorio: logo, menú y, al final, el carrito */
+  .tarjeta { width: calc(33.333% - .67rem); } /* tres por fila */
+  .acciones { order: 3; } /* escritorio: logo, menú y, al final, el carrito */
   .slides { aspect-ratio: 2 / 1; }
   .portada h1 { font-size: 2.6rem; }
 }
-

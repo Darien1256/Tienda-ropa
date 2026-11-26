@@ -10,8 +10,7 @@
         <p class="creditos">Sitio web creado por Darien Parra · &copy; 2026 DR3X</p>
     </footer>
 
-    <!-- Carrito de compras (funcionalidad nueva): el mismo carrito aparece en TODAS las páginas -->
-    <?php include "carrito.php"; ?>
+    <?php include "carrito.php"; ?> <!--Agrega el carrito en todas las paginas-->
 
     <script src="js/main.js" defer></script>
 </body>
